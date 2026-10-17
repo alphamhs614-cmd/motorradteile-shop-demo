@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gebrauchte Motorradteile – Katalog-Shop (Konzept-Entwurf)</title>
+<meta name="description" content="Konzept-Entwurf eines einfachen Info-Shops für gebrauchte Motorradteile: Katalog mit Suche und Filtern, Anfrage per E-Mail oder Telefon, keine Online-Zahlung.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#141516;--bg2:#1c1e20;--card:#222528;--ink:#eceae5;--mut:#9a9d9f;--or:#ff7a1a;--or2:#ffa45c;--line:#2f3337;--ok:#7bd88f}
+*{box-sizing:border-box;margin:0;padding:0}html{overflow-x:clip}html.lenis{height:auto}.lenis.lenis-smooth{scroll-behavior:auto}
+body{font-family:Barlow,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer;color:inherit}
+.wrap{width:min(1220px,92%);margin:auto}
+h1,h2,h3,.cond{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.01em;line-height:1}
+.flag{background:var(--or);color:#141516;font-size:.78rem;font-weight:600;text-align:center;padding:.4rem 1rem}
+header{position:sticky;top:0;z-index:40;background:rgba(20,21,22,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:68px;gap:1rem}
+.logo{display:flex;align-items:center;gap:.6rem;font-family:"Barlow Condensed";font-weight:800;font-size:1.45rem;text-transform:uppercase}
+.logo svg{width:34px;height:34px}.logo small{display:block;font-size:.68rem;letter-spacing:.2em;color:var(--mut);font-weight:600}
+nav{display:flex;gap:1.6rem;font-weight:600;font-size:.95rem;color:var(--mut)}nav a:hover{color:var(--or)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--or);color:#141516;border:0;border-radius:6px;padding:.75rem 1.2rem;font-weight:700;font-size:.95rem;transition:transform .2s,background .2s}
+.btn:hover{background:var(--or2);transform:translateY(-2px)}
+.btn.o{background:transparent;color:var(--ink);border:1px solid var(--line)}.btn.o:hover{border-color:var(--or);color:var(--or)}
+.rv{opacity:0;transform:translateY(24px)}
+/* hero */
+.hero{position:relative;overflow:hidden;padding:80px 0 70px;border-bottom:1px solid var(--line)}
+.hero:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent 0 22px,#ffffff05 22px 24px)}
+.hero .g{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center}
+.hero h1{font-size:clamp(3rem,7vw,5.8rem);font-weight:800}
+.hero h1 span{color:var(--or)}
+.hero p{color:var(--mut);font-size:1.12rem;margin:1.2rem 0 1.8rem;max-width:520px}
+.hero .act{display:flex;gap:.7rem;flex-wrap:wrap}
+.chk{display:flex;gap:1.4rem;flex-wrap:wrap;margin-top:2rem;font-size:.92rem;color:var(--mut)}.chk span:before{content:"✓ ";color:var(--or);font-weight:700}
+.gear{position:relative;aspect-ratio:1;max-width:440px;justify-self:center;width:100%}
+.gear svg{position:absolute;inset:0;width:100%;height:100%}
+.gear .badge{position:absolute;right:4%;bottom:10%;background:var(--or);color:#141516;font-family:"Barlow Condensed";font-weight:800;font-size:1.3rem;padding:.6rem .9rem;border-radius:6px;transform:rotate(-5deg);text-transform:uppercase;line-height:1}
+.gear .badge small{display:block;font-size:.75rem;font-family:Barlow;font-weight:600;text-transform:none}
+/* catalogue */
+section{padding:80px 0}
+.head{display:flex;justify-content:space-between;align-items:end;gap:1rem;flex-wrap:wrap;margin-bottom:1.6rem}
+h2{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800}h2 span{color:var(--or)}
+.tools{display:grid;grid-template-columns:1fr auto auto;gap:.7rem;margin-bottom:1rem}
+.tools input,.tools select{background:var(--card);border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:.8rem 1rem;font:inherit;min-width:0}
+.tools input:focus,.tools select:focus{outline:2px solid var(--or);border-color:transparent}
+.cats{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.6rem}
+.cats button{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:.45rem .95rem;font-weight:600;font-size:.88rem;color:var(--mut)}
+.cats button.on{background:var(--or);border-color:var(--or);color:#141516}
+.cnt{color:var(--mut);font-size:.9rem;margin-bottom:1rem}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.it{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:pointer;transition:transform .25s,border-color .25s;display:flex;flex-direction:column}
+.it:hover{transform:translateY(-4px);border-color:var(--or)}
+.it .im{aspect-ratio:4/3;background:radial-gradient(circle at 50% 40%,#2c3034,#1a1c1e);display:grid;place-items:center;position:relative}
+.it .im svg{width:56%;height:56%;stroke:var(--ink);fill:none;stroke-width:1.4;opacity:.9}
+.it .st{position:absolute;top:.6rem;left:.6rem;font-size:.7rem;font-weight:700;padding:.2rem .5rem;border-radius:4px;background:#0008;letter-spacing:.04em}
+.it .st.res{background:#e5484d;color:#fff}
+.it .nr{position:absolute;top:.6rem;right:.6rem;font-size:.7rem;color:var(--mut)}
+.it .bd{padding:.9rem 1rem 1rem;display:flex;flex-direction:column;flex:1}
+.it small{color:var(--or);font-weight:600;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase}
+.it h3{font-size:1.3rem;margin:.25rem 0 .3rem;font-weight:700}
+.it .fit{font-size:.85rem;color:var(--mut);flex:1}
+.it .pr{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.it .pr b{font-family:"Barlow Condensed";font-size:1.6rem;font-weight:700}
+.it .pr span{font-size:.8rem;color:var(--mut)}
+.empty{display:none;text-align:center;color:var(--mut);padding:3rem;border:1px dashed var(--line);border-radius:10px}
+/* modal */
+.md{position:fixed;inset:0;z-index:100;background:#000b;display:none;place-items:center;padding:4%}
+.md.on{display:grid}
+.mbox{background:var(--bg2);border:1px solid var(--line);border-radius:14px;width:min(860px,100%);max-height:92vh;overflow:auto;display:grid;grid-template-columns:1fr 1fr;position:relative}
+.mbox .mi{background:radial-gradient(circle at 50% 40%,#2c3034,#17191b);display:grid;place-items:center;min-height:320px}
+.mbox .mi svg{width:60%;stroke:var(--ink);fill:none;stroke-width:1.3}
+.thumbs{display:flex;gap:.4rem;padding:.6rem;background:#111}
+.thumbs i{flex:1;aspect-ratio:4/3;border-radius:4px;background:#2a2d31;border:1px solid var(--line)}.thumbs i:first-child{border-color:var(--or)}
+.mbox .mc{padding:2rem}
+.mbox h3{font-size:2rem;margin:.3rem 0 .8rem}
+.spec{width:100%;border-collapse:collapse;font-size:.92rem;margin:1rem 0}
+.spec td{padding:.45rem 0;border-bottom:1px solid var(--line)}.spec td:first-child{color:var(--mut);width:42%}
+.mbox .price{font-family:"Barlow Condensed";font-size:2.4rem;font-weight:700;color:var(--or)}
+.mbox .ac{display:grid;gap:.6rem;margin-top:1rem}
+.mbox .note{font-size:.82rem;color:var(--mut);margin-top:.8rem}
+.x{position:absolute;top:.7rem;right:.7rem;width:38px;height:38px;border-radius:50%;background:#000a;border:0;font-size:1.1rem;z-index:2}
+/* how */
+.how{background:var(--bg2);border-block:1px solid var(--line)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem}
+.step{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.6rem}
+.step b{font-family:"Barlow Condensed";font-size:3rem;color:var(--or);display:block;line-height:1}
+.step h3{font-size:1.5rem;margin:.4rem 0}.step p{color:var(--mut);font-size:.95rem}
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center}
+.cbox{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:2rem;display:grid;gap:1rem}
+.cbox a.row{display:flex;gap:1rem;align-items:center;padding:1rem;border-radius:8px;background:var(--bg2);border:1px solid var(--line);transition:border-color .2s}
+.cbox a.row:hover{border-color:var(--or)}
+.cbox .ic{width:44px;height:44px;border-radius:8px;background:var(--or);color:#141516;display:grid;place-items:center;font-size:1.2rem;flex:none}
+.cbox small{display:block;color:var(--mut);font-size:.8rem}
+footer{border-top:1px solid var(--line);padding:2rem 0;color:var(--mut);font-size:.88rem}
+footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.fab{display:none}
+@media(max-width:980px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:820px){nav{display:none}.hero .g,.contact{grid-template-columns:1fr}.gear{max-width:300px}.grid{grid-template-columns:1fr 1fr}.tools{grid-template-columns:1fr 1fr}.tools input{grid-column:1/-1}.steps{grid-template-columns:1fr}.mbox{grid-template-columns:1fr}.mbox .mi{min-height:220px}section{padding:60px 0}
+ .fab{display:flex;position:fixed;bottom:16px;right:16px;z-index:50;box-shadow:0 10px 30px #ff7a1a55;border-radius:999px}}
+@media(max-width:440px){.grid{gap:.6rem}.it h3{font-size:1.08rem}.it .bd{padding:.7rem}.it .pr b{font-size:1.3rem}.it .fit{font-size:.78rem}.bar .btn{display:none}}
+</style>
+</head>
+<body>
+<div class="flag">Unverbindlicher Konzept-Entwurf von Mohammad · Name, Artikel, Preise &amp; Kontaktdaten sind Platzhalter</div>
+<header><div class="wrap bar">
+ <a href="#top" class="logo"><svg viewBox="0 0 40 40" fill="none" stroke="#ff7a1a" stroke-width="2.4"><circle cx="20" cy="20" r="8"/><path d="M20 4v5M20 31v5M4 20h5M31 20h5M8.7 8.7l3.5 3.5M27.8 27.8l3.5 3.5M8.7 31.3l3.5-3.5M27.8 12.2l3.5-3.5"/></svg><span>Teilekiste<small>Gebrauchte Motorradteile</small></span></a>
+ <nav><a href="#katalog">Katalog</a><a href="#so">So kaufen Sie</a><a href="#kontakt">Kontakt</a></nav>
+ <a href="#kontakt" class="btn">Teil anfragen</a>
+</div></header>
+
+<section class="hero" id="top"><div class="wrap g">
+ <div>
+  <h1 class="hi">Gebrauchte <span>Motorradteile</span><br>geprüft &amp; fair.</h1>
+  <p class="hi">Original-Ersatzteile aus Zerlegung, getestet und ehrlich beschrieben. Einfach Teil aussuchen und per E-Mail oder Telefon anfragen. Keine Online-Zahlung, kein Konto nötig.</p>
+  <div class="act hi"><a href="#katalog" class="btn">Zum Katalog →</a><a href="#kontakt" class="btn o">📞 Anrufen</a></div>
+  <div class="chk hi"><span>Abholung oder Versand</span><span>Ehrliche Fotos</span><span>Privat &amp; Werkstatt</span></div>
+ </div>
+ <div class="gear hi"><svg viewBox="0 0 200 200" id="gsv"><g id="g1"><circle cx="80" cy="90" r="46" fill="none" stroke="#ff7a1a" stroke-width="10" stroke-dasharray="12 9"/><circle cx="80" cy="90" r="34" fill="#1c1e20" stroke="#ff7a1a" stroke-width="2"/><circle cx="80" cy="90" r="10" fill="none" stroke="#ff7a1a" stroke-width="3"/></g><g id="g2"><circle cx="140" cy="140" r="30" fill="none" stroke="#eceae5" stroke-width="8" stroke-dasharray="9 7"/><circle cx="140" cy="140" r="21" fill="#1c1e20" stroke="#eceae5" stroke-width="2"/><circle cx="140" cy="140" r="6" fill="#eceae5"/></g></svg><div class="badge" id="cntb"><span id="bc">16</span> Teile online<small>Beispieldaten*</small></div></div>
+</div></section>
+
+<section id="katalog"><div class="wrap">
+ <div class="head"><h2 class="rv">Teile-<span>Katalog</span></h2><p class="cnt" id="cnt"></p></div>
+ <div class="tools rv"><input id="q" placeholder="Suchen: z. B. Vergaser, CBR, Bremse …"><select id="br"><option value="">Alle Marken</option></select><select id="so2"><option value="neu">Neueste zuerst</option><option value="pa">Preis aufsteigend</option><option value="pd">Preis absteigend</option></select></div>
+ <div class="cats rv" id="cats"></div>
+ <div class="grid" id="grid"></div>
+ <div class="empty" id="empty">Nichts gefunden. Fragen Sie trotzdem an, vielleicht ist das Teil noch nicht eingestellt.</div>
+</div></section>
+
+<section class="how" id="so"><div class="wrap">
+ <h2 class="rv">So <span>kaufen</span> Sie</h2>
+ <div class="steps"><div class="step rv"><b>01</b><h3>Teil aussuchen</h3><p>Im Katalog suchen oder filtern, Artikelnummer notieren.</p></div><div class="step rv"><b>02</b><h3>Anfragen</h3><p>Per E-Mail (Artikelnummer wird automatisch eingetragen) oder telefonisch.</p></div><div class="step rv"><b>03</b><h3>Abholen oder Versand</h3><p>Bezahlung bei Abholung oder per Überweisung vor Versand.</p></div></div>
+</div></section>
+
+<section id="kontakt"><div class="wrap contact">
+ <div class="rv"><h2>Fragen? <span>Einfach</span> melden.</h2><p style="color:var(--mut);margin-top:1rem;max-width:460px">Sie suchen ein bestimmtes Teil, das nicht im Katalog steht? Schreiben Sie uns Modell und Baujahr, wir schauen im Lager nach.</p></div>
+ <div class="cbox rv">
+  <a class="row" href="mailto:info@example.de?subject=Anfrage%20Motorradteil"><span class="ic">✉</span><span><small>E-Mail</small>info@example.de</span></a>
+  <a class="row" href="#kontakt"><span class="ic">📞</span><span><small>Telefon (Platzhalter)</small>0000 / 000 000</span></a>
+  <a class="row" href="#kontakt"><span class="ic">📍</span><span><small>Abholung nach Absprache</small>Musterstraße 1, 00000 Musterort</span></a>
+ </div>
+</div></section>
+<footer><div class="wrap"><span>© 2026 Teilekiste (Platzhalter-Name) · reine Info-Seite, kein Online-Verkauf</span><span><a href="#top">Impressum</a> · <a href="#top">Datenschutz</a></span></div></footer>
+<a href="#kontakt" class="btn fab">📞 Anfragen</a>
+
+<div class="md" id="md"><div class="mbox"><button class="x" id="mx">✕</button><div><div class="mi" id="mi"></div><div class="thumbs"><i></i><i></i><i></i><i></i></div></div><div class="mc" id="mc"></div></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let lenis=null;if(window.Lenis&&!reduce){lenis=new Lenis({lerp:.1});const raf=t=>{lenis.raf(t);requestAnimationFrame(raf)};requestAnimationFrame(raf)}
+$$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();lenis?lenis.scrollTo(t,{offset:-70}):t.scrollIntoView({behavior:'smooth'})}));
+const IC={motor:'<path d="M10 30h8v-6h10v-6h20v6h8v24H44v6H24v-6h-6v-6h-8z"/><path d="M28 18v-6h12v6M56 32h4v12h-4"/>',bremse:'<circle cx="32" cy="32" r="22"/><circle cx="32" cy="32" r="7"/><path d="M44 12a24 24 0 0 1 10 14l-8 4a14 14 0 0 0-6-9z" fill="#ff7a1a33"/>',auspuff:'<path d="M6 40h22l6-6h18a6 6 0 0 1 0 12H34l-6-6"/><circle cx="52" cy="40" r="3"/>',licht:'<circle cx="28" cy="32" r="16"/><circle cx="28" cy="32" r="8"/><path d="M48 24l10-4M48 32h12M48 40l10 4"/>',rahmen:'<path d="M8 44l14-22h18l14 22M22 22l10 22 8-22M8 44h46"/>',rad:'<circle cx="32" cy="32" r="24"/><circle cx="32" cy="32" r="5"/><path d="M32 8v19M32 37v19M8 32h19M37 32h19M15 15l13 13M36 36l13 13M15 49l13-13M36 28l13-13"/>',elektrik:'<rect x="14" y="18" width="36" height="30" rx="3"/><path d="M22 18v-6M42 18v-6M28 26l-4 10h8l-4 10"/>',tank:'<path d="M10 40c0-14 10-22 26-22h8c8 0 12 6 12 12v6c0 6-4 10-10 10H18c-5 0-8-2-8-6z"/><rect x="30" y="14" width="10" height="5" rx="2"/>',spiegel:'<ellipse cx="22" cy="20" rx="14" ry="10"/><path d="M30 28l20 26"/>',verkl:'<path d="M8 46c6-18 18-30 40-34 4 10 6 22 4 34z"/><path d="M20 40l20-18"/>'};
+const B=['Honda','Yamaha','Suzuki','Kawasaki','BMW','KTM'];
+const N=[['motor','Vergaserbatterie','Honda','CBR 600 F (1999–2000)',189,'Gut, gereinigt'],['bremse','Bremssattel vorne links','Yamaha','YZF-R6 (2003–2005)',75,'Sehr gut'],['auspuff','Endschalldämpfer','Suzuki','GSX-R 750 (2004)',140,'Leichte Kratzer'],['licht','Scheinwerfer komplett','Kawasaki','Z 750 (2007–2012)',95,'Sehr gut'],['rad','Felge hinten 17"','BMW','R 1150 GS',160,'Gut, gerade'],['elektrik','Lichtmaschine','Honda','CB 500 (1994–2003)',65,'Getestet'],['tank','Tank mit Deckel','Yamaha','XJ 600 S Diversion',120,'Innen rostfrei'],['spiegel','Spiegel-Set','KTM','Duke 390 (2017–2020)',35,'Neuwertig'],['motor','Zylinderkopf','Suzuki','SV 650 (1999–2002)',210,'Geprüft'],['bremse','Bremsscheibe vorne','Kawasaki','ER-6n (2009–2011)',55,'Ca. 4,8 mm'],['verkl','Seitenverkleidung rechts','Honda','CBR 125 R',45,'Halter ok'],['rahmen','Heckrahmen','Yamaha','MT-07 (2014–2017)',85,'Mit Papieren'],['elektrik','CDI / Steuergerät','Suzuki','GS 500 E',70,'Getestet'],['licht','Rücklicht LED','KTM','125 Duke',30,'Sehr gut'],['auspuff','Krümmeranlage','BMW','F 800 R',175,'Dicht'],['rad','Felge vorne 17"','Kawasaki','Ninja 650',150,'Gut']];
+const items=N.map((n,i)=>({id:'MT-'+String(1040+i),ic:n[0],t:n[1],b:n[2],fit:n[3],p:n[4],z:n[5],res:i===6}));
+const C={alle:'Alle',motor:'Motor',bremse:'Bremsen',auspuff:'Auspuff',licht:'Beleuchtung',elektrik:'Elektrik',rad:'Räder',rahmen:'Rahmen',tank:'Tank',spiegel:'Anbauteile',verkl:'Verkleidung'};
+$('#cats').innerHTML=Object.entries(C).map(([k,v],i)=>`<button data-c="${k}" class="${i?'':'on'}">${v}</button>`).join('');
+$('#br').innerHTML+=B.map(b=>`<option>${b}</option>`).join('');
+let cat='alle';
+function render(){const q=$('#q').value.toLowerCase().trim(),br=$('#br').value,so=$('#so2').value;let L=items.filter(x=>(cat==='alle'||x.ic===cat)&&(!br||x.b===br)&&(!q||(x.t+' '+x.b+' '+x.fit+' '+x.id).toLowerCase().includes(q)));
+ if(so==='pa')L.sort((a,b)=>a.p-b.p);if(so==='pd')L.sort((a,b)=>b.p-a.p);
+ $('#grid').innerHTML=L.map(x=>`<div class="it" data-id="${x.id}"><div class="im"><span class="st ${x.res?'res':''}">${x.res?'Reserviert':x.z}</span><span class="nr">${x.id}</span><svg viewBox="0 0 64 64">${IC[x.ic]}</svg></div><div class="bd"><small>${x.b}</small><h3>${x.t}</h3><div class="fit">passend für ${x.fit}</div><div class="pr"><b>${x.p} €</b><span>Details →</span></div></div></div>`).join('');
+ $('#empty').style.display=L.length?'none':'block';$('#cnt').textContent=L.length+' von '+items.length+' Artikeln (Beispieldaten)';
+ $$('.it').forEach(el=>el.onclick=()=>open(el.dataset.id));
+ if(window.gsap&&!reduce)gsap.from('.it',{opacity:0,y:16,stagger:.03,duration:.45,ease:'power2.out',clearProps:'all'})}
+$$('#cats button').forEach(b=>b.onclick=()=>{$$('#cats button').forEach(x=>x.classList.remove('on'));b.classList.add('on');cat=b.dataset.c;render()});
+['input','change'].forEach(ev=>{$('#q').addEventListener(ev,render);$('#br').addEventListener(ev,render);$('#so2').addEventListener(ev,render)});
+function open(id){const x=items.find(i=>i.id===id);$('#mi').innerHTML=`<svg viewBox="0 0 64 64">${IC[x.ic]}</svg>`;
+ const sub=encodeURIComponent(`Anfrage ${x.id}: ${x.t} (${x.b})`),body=encodeURIComponent(`Hallo,\n\nich interessiere mich für Artikel ${x.id} – ${x.t}, passend für ${x.fit}, ${x.p} €.\nIst das Teil noch verfügbar?\n\nViele Grüße`);
+ $('#mc').innerHTML=`<small style="color:var(--or);font-weight:700;letter-spacing:.05em">${x.b.toUpperCase()} · ${x.id}</small><h3>${x.t}</h3><div class="price">${x.p} €</div><table class="spec"><tr><td>Passend für</td><td>${x.fit}</td></tr><tr><td>Zustand</td><td>${x.z}</td></tr><tr><td>Kategorie</td><td>${C[x.ic]}</td></tr><tr><td>Verfügbarkeit</td><td>${x.res?'<span style="color:#e5484d">Reserviert</span>':'<span style="color:var(--ok)">Verfügbar</span>'}</td></tr><tr><td>Versand</td><td>Abholung oder Versand auf Anfrage</td></tr></table><p style="color:var(--mut);font-size:.92rem">Beschreibung des Teils: Herkunft, Laufleistung, Mängel, Lieferumfang. (Platzhaltertext)</p><div class="ac"><a class="btn" style="justify-content:center" href="mailto:info@example.de?subject=${sub}&body=${body}">✉ Per E-Mail anfragen</a><a class="btn o" style="justify-content:center" href="#kontakt" onclick="closeM()">📞 Telefonisch anfragen</a></div><p class="note">Keine Bezahlung über die Website. Kauf per E-Mail oder Telefon.</p>`;
+ $('#md').classList.add('on');lenis&&lenis.stop()}
+function closeM(){$('#md').classList.remove('on');lenis&&lenis.start()}
+$('#mx').onclick=closeM;$('#md').onclick=e=>{if(e.target.id==='md')closeM()};addEventListener('keydown',e=>e.key==='Escape'&&closeM());
+render();$('#bc').textContent=items.length;
+if(window.gsap&&!reduce){gsap.registerPlugin(ScrollTrigger);if(lenis)lenis.on('scroll',ScrollTrigger.update);
+ gsap.from('.hi',{y:30,opacity:0,stagger:.1,duration:1,ease:'power3.out'});
+ gsap.to('#g1',{rotation:360,svgOrigin:'80 90',repeat:-1,duration:14,ease:'none'});gsap.to('#g2',{rotation:-540,svgOrigin:'140 140',repeat:-1,duration:14,ease:'none'});
+ gsap.to('#gsv',{y:-30,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+ $$('.rv').forEach(el=>gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 92%'}}));
+}else $$('.rv').forEach(e=>{e.style.opacity=1;e.style.transform='none'});
+</script>
+</body>
+</html>
